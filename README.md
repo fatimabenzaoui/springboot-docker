@@ -9,7 +9,7 @@ Description : test springboot with docker
 Package Name : com.fb.shop
 Packaging : Jar
 Java : 17
-Dependencies : Spring Web + H2 Database
+Dependencies : Spring Web
 
 # Générer le .jar de l'application dans le dossier target
 .\mvnw.cmd package
@@ -28,36 +28,36 @@ CMD ["java", "-jar", "/shop.jar"]
 docker build -t my-jdk-17 .
 
 # Une fois que l'image Docker est construite, exécuter un conteneur à partir de cette image
-docker run -p 8000:8080 my-jdk-17
+docker run -p 8080:8080 my-jdk-17
 
 # Créer un fichier docker-compose.yml à la racine du projet
-version: '3.8'
-services:
-  app:
-    image: my-jdk-17
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8000:8080"
-    depends_on:
-      - db
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/shopdb
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
-  db:
-    image: mysql:8.0
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: shopdb
-    ports:
-      - "3306:3306"
-    volumes:
-      - db_data:/var/lib/mysql
-volumes:
-  db_data:
+version: '3.8'<br>
+services:<br>
+  app:<br>
+    image: my-jdk-17<br>
+    build:<br>
+      context: .<br>
+      dockerfile: Dockerfile<br>
+    ports:<br>
+      - "8000:8080"<br>
+    depends_on:<br>
+      - db<br>
+    environment:<br>
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/shopdb<br>
+      SPRING_DATASOURCE_USERNAME: root<br>
+      SPRING_DATASOURCE_PASSWORD: root<br>
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update<br>
+  db:<br>
+    image: mysql:8.0<br>
+    environment:<br>
+      MYSQL_ROOT_PASSWORD: root<br>
+      MYSQL_DATABASE: shopdb<br>
+    ports:<br>
+      - "3306:3306"<br>
+    volumes:<br>
+      - db_data:/var/lib/mysql<br>
+volumes:<br>
+  db_data:<br>
 
 # Renseigner le fichier application.properties
 # DATASOURCE MYSQL
